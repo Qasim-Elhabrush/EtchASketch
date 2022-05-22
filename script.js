@@ -27,10 +27,32 @@ for (let i = 0; i < wh; i++) {
 document.documentElement.style.setProperty('--columns', squares);
 document.documentElement.style.setProperty('--rows', squares);
 
-//turns the box black if the mouse enters the box/div
+
+
+//function to create random number from 0-> chosen maximum number
+const randomNumber = function(maxNumber) {
+        return Math.floor(Math.random() * maxNumber);
+    }
+    //creates random color based on random number
+const randomColor = function(numPassed) {
+    lightness = 100 - 10 * numPassed
+    let h = randomNumber(360);
+    let s = randomNumber(100);
+    let l = randomNumber(lightness);
+    return `hsl(${h},${s}%,${l}%)`;
+
+}
+
+//turns the box a random color when hovered on and increases darkness of box after each pass
 let elements = document.getElementsByClassName("gridItem");
 for (let i = 0; i < elements.length; i++) {
+    let passes = 0;
     elements[i].addEventListener('mouseenter', () => {
-        elements[i].style.backgroundColor = "black";
+        if (elements[i].style.backgroundColor == 'lightBlue') {
+            elements[i].style.backgroundColor = randomColor();
+        } else {
+            passes++
+            elements[i].style.backgroundColor = randomColor(passes);
+        }
     });
 }
